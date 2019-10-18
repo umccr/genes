@@ -4,6 +4,20 @@ Collections of genes used at UMCCR.
 - [Genes](#genes)
   - [Known fusions](#known-fusions)
 
+## CPSR Cancer Predisposition Genes
+Includes 209 genes from [CPSR](https://github.com/sigven/cpsr/blob/master/predisposition.md),
+plus a further 8 genes based on advice from curators. Total: 217 genes (2019-Oct-10).
+
+
+
+
+
+
+
+
+
+
+
 ## Known fusions
 Known fusions are curated by HMF. From their
 [2018 preprint](https://www.biorxiv.org/content/biorxiv/early/2018/09/20/415133.full.pdf):
