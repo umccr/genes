@@ -1,6 +1,25 @@
+---
+title: "Overlapping Genes with SuperDups"
+author: "Peter Diakumis"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+output:
+  html_document:
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```{r load_pkgs, message=F, warning=F}
 require(tidyverse)
 require(here)
 require(glue)
+```
+
+## bedtools intersect
+
+```{r}
 
 tx_hg19 <- here("nogit/transcripts/ngs_utils/umccr_cancer_genes.GRCh37.transcript.bed")
 tx_hg38 <- here("nogit/transcripts/ngs_utils/umccr_cancer_genes.hg38.transcript.bed")
@@ -14,11 +33,11 @@ dup_hg38 <- here("nogit/superdups/GRCh38GenomicSuperDup_clean.bed")
 
 bedtools_intersect <- function(a, b) {
   bedtools <- "/Users/pdiakumis/my_apps/miniconda/envs/woof/bin/bedtools"
-  query <- glue::glue("{bedtools} intersect -a {a} -b {b} -wb")
+  query <- glue::glue("{bedtools} intersect -a {a} -b {b} -wo")
   system(query, intern = TRUE) %>%
     tibble::tibble(all_cols = .) %>%
     tidyr::separate(col = .data$all_cols,
-                    into = c("chrom1", "start1", "end1", "symbol", "chrom2", "start2", "end2"),
+                    into = c("chrom1", "start1", "end1", "symbol", "chrom2", "start2", "end2", "overlap"),
                     sep = "\t", convert = TRUE)
 }
 
@@ -26,3 +45,26 @@ bedtools_intersect <- function(a, b) {
 (hg38_tx_dup <- bedtools_intersect(tx_hg38, dup_hg38))
 (hg19_cod_dup <- bedtools_intersect(cod_hg19, dup_hg19))
 (hg38_cod_dup <- bedtools_intersect(cod_hg38, dup_hg38))
+
+```
+
+### Overlap summary
+
+```{r}
+purrr::map_dfr(list(hg19_tx_dup = hg19_tx_dup, hg38_tx_dup = hg38_tx_dup,
+                    hg19_cod_dup = hg19_cod_dup, hg38_cod_dup = hg38_cod_dup),
+           function(d) {
+             pull(d, overlap) %>% summary() %>% as.matrix() %>% t() %>% as_tibble()
+       }, .id = "pair")
+```
+
+### Number of genes
+
+```{r}
+purrr::map_int(list(hg19_tx_dup = hg19_tx_dup, hg38_tx_dup = hg38_tx_dup,
+                    hg19_cod_dup = hg19_cod_dup, hg38_cod_dup = hg38_cod_dup),
+               function(d) {
+                 pull(d, symbol) %>% table() %>% length()
+       })
+```
+
