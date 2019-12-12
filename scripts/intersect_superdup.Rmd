@@ -68,3 +68,12 @@ purrr::map_int(list(hg19_tx_dup = hg19_tx_dup, hg38_tx_dup = hg38_tx_dup,
        })
 ```
 
+## Export Tables
+
+```{r}
+readr::write_tsv(hg19_tx_dup, here("superdups/hg19_tx_dup.tsv"))
+readr::write_tsv(hg38_tx_dup, here("superdups/hg38_tx_dup.tsv"))
+readr::write_tsv(hg19_cod_dup, here("superdups/hg19_cod_dup.tsv"))
+readr::write_tsv(hg38_cod_dup, here("superdups/hg38_cod_dup.tsv"))
+```
+
