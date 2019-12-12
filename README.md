@@ -1,8 +1,13 @@
-Genes
-=====
-Collections of genes used at UMCCR.
-- [Genes](#genes)
+Genes (and Other Stuff)
+=====================
+
+Collections of genes and other genomic datasets used at UMCCR.
+
+- [Genes (and Other Stuff)](#genes-and-other-stuff)
+  - [CPSR Cancer Predisposition Genes](#cpsr-cancer-predisposition-genes)
   - [Known fusions](#known-fusions)
+  - [Genomic Super Dups](#genomic-super-dups)
+
 
 ## CPSR Cancer Predisposition Genes
 Includes 209 genes from [CPSR](https://github.com/sigven/cpsr/blob/master/predisposition.md),
@@ -81,3 +86,15 @@ wget https://raw.githubusercontent.com/ndaniel/fusioncatcher/master/bin/generate
 There are also known fusion genes in [NGC](http://ncg.kcl.ac.uk/), one of the sources for UMCCR cancer gene list.
 We compare the lists with `compare.R`.
 The FusionsCatcher list is too big so we assign a lower tier to a matching fusion when prioritizing.
+
+Genomic Super Dups
+------------------
+
+* https://blog.goldenhelix.com/why-you-should-care-about-segmental-duplications/
+* http://varianttools.sourceforge.net/Annotation/GenomicSuperDups
+
+```
+# Downloaded 2019-Nov-25
+wget http://humanparalogy.gs.washington.edu/build37/data/GRCh37GenomicSuperDup.tab
+wget http://humanparalogy.gs.washington.edu/build38/data/GRCh38GenomicSuperDup.tab
+```
